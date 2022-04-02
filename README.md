@@ -7,7 +7,7 @@
 |last_name| Last name | String |
 |email| Email | String | 
 
-#### Routes ⚡
+#### Routes 
 | Routes | HTTP Methods| Description
 |:------- |:---------------|:--------------
 | /api/students/     | GET                  | Displays all identity
