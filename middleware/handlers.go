@@ -32,9 +32,7 @@ func createConnection() *sql.DB {
 		log.Fatalf("Error loading .env file")
 	}
 
-	dbInfo := fmt.Sprintf("port=%s, user=%s, password=%s, dbname=%s", PORT, USER, PASSWORD, DBNAME)
-
-	db, err := sql.Open("postgres", dbInfo)
+	db, err := sql.Open("postgres", "user=postgres password=xsiroj1999 dbname=postgres sslmode=disable")
 	if err != nil {
 		panic(err)
 	}
@@ -133,7 +131,7 @@ func UpdateStudent(w http.ResponseWriter, r *http.Request) {
 
 	updatedRows := updateStudent(int64(id), student)
 
-	msg := fmt.Sprintf("Student updated successfully. Total rows/record affected", updatedRows)
+	msg := fmt.Sprint("Student updated successfully. Total rows/record affected", updatedRows)
 
 	res := response{
 		ID:      int64(id),
@@ -175,7 +173,7 @@ func insertStudent(student models.Student) int64 {
 
 	defer db.Close()
 
-	sqlStatement := `INSERT INTO student (first_name, last_name, email) VALUES ($1, $2, $3) RETURNING userid`
+	sqlStatement := `INSERT INTO students (first_name, last_name, email) VALUES ($1, $2, $3) RETURNING id`
 
 	var id int64
 
@@ -198,7 +196,7 @@ func getStudent(id int64) (models.Student, error) {
 
 	var student models.Student
 
-	sqlStatemnt := `SELECT * FROM students WHERE userid=$1`
+	sqlStatemnt := `SELECT * FROM students WHERE id=$1`
 
 	row := db.QueryRow(sqlStatemnt, id)
 
@@ -256,7 +254,7 @@ func updateStudent(id int64, student models.Student) int64 {
 
 	defer db.Close()
 
-	sqlStatement := `UPDATE students SET first_name=$2, last_name=$3, email=$4 WHERE userid=$1`
+	sqlStatement := `UPDATE students SET first_name=$2, last_name=$3, email=$4 WHERE id=$1`
 
 	res, err := db.Exec(sqlStatement, id, student.FirstName, student.LastName, student.Email)
 	if err != nil {
@@ -278,7 +276,7 @@ func deleteStudent(id int64) int64 {
 
 	defer db.Close()
 
-	sqlStatement := `DELETE FROM students WHERE userid=$1`
+	sqlStatement := `DELETE FROM students WHERE id=$1`
 
 	res, err := db.Exec(sqlStatement, id)
 
