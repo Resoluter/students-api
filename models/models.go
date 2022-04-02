@@ -3,7 +3,7 @@ package models
 // User schema of the user table
 type Student struct {
 	ID        int64  `json:"id"`
-	FirstName string `json:"firstname"`
-	LastName  string `json:"lastname"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
 	Email     string `json:"email"`
 }
