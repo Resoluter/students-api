@@ -1,6 +1,6 @@
 # Students-API with Golang and PostgreSQL
 
-#### The Object 🍵
+#### The Object
 | Properties | Description | Type  |
 |:----------- |:---------------|:--------|
 |first_name| First name | String| 
